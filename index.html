@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tandoor &amp; Tamarind | Indian Restaurant in Koregaon Park, Pune</title>
+<meta name="description" content="Tandoor & Tamarind: charcoal tandoor, slow curries and South Indian classics in Koregaon Park, Pune. Order online or reserve a table.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout concept: dark tamarind-brown dining room, one turmeric accent, big Devanagari-flavoured display type, a live menu with a working cart, a booking widget and a map. */
+:root{
+  --tam:#1c110c;
+  --tam-2:#291912;
+  --tam-3:#3a261b;
+  --turmeric:#e9a824;
+  --chilli:#d2442a;
+  --leaf:#5aa469;
+  --cream:#f8eedb;
+  --muted:#c2b19a;
+  --line:rgba(248,238,219,.14);
+  --display:'Rozha One','Playfair Display',Georgia,serif;
+  --body:'Hind','Segoe UI',Arial,sans-serif;
+  --ease:cubic-bezier(.2,.75,.2,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--body);font-weight:400;font-size:17px;line-height:1.6;background:var(--tam);color:var(--cream);overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.08;text-wrap:balance}
+.wrap{max-width:1220px;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:13px;letter-spacing:.26em;text-transform:uppercase;color:var(--turmeric);font-weight:600}
+:focus-visible{outline:2px solid var(--turmeric);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;border:1.5px solid var(--cream);border-radius:999px;font-weight:600;font-size:15px;letter-spacing:.04em;background:transparent;cursor:pointer;transition:background .3s var(--ease),color .3s,border-color .3s,transform .3s var(--ease)}
+.btn:hover{background:var(--cream);color:var(--tam);transform:translateY(-2px)}
+.btn.solid{background:var(--turmeric);border-color:var(--turmeric);color:var(--tam)}
+.btn.solid:hover{background:var(--cream);border-color:var(--cream)}
+
+/* preloader + progress */
+#pre{position:fixed;inset:0;z-index:100;background:var(--tam);display:grid;place-items:center;transition:opacity .7s var(--ease),visibility .7s}
+#pre.done{opacity:0;visibility:hidden}
+#pre .pmark{font-family:var(--display);font-size:clamp(34px,7vw,64px);text-align:center;color:var(--turmeric)}
+#pre .pmark small{display:block;font-family:var(--body);font-size:14px;letter-spacing:.4em;color:var(--muted);margin-top:10px;animation:fade 1.2s .3s both}
+#pre .flame{width:46px;height:60px;margin:0 auto 14px;display:block;animation:flick 1s ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes flick{from{transform:scale(1) rotate(-3deg)}to{transform:scale(1.12,1.2) rotate(3deg)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--chilli),var(--turmeric));z-index:60}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(28,17,12,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{font-family:var(--display);font-size:24px;line-height:1}
+.logo b{color:var(--turmeric);font-weight:400}
+.links{display:flex;gap:30px;font-size:15px;font-weight:500}
+.links a{color:var(--muted);transition:color .3s}
+.links a:hover{color:var(--turmeric)}
+.navr{display:flex;align-items:center;gap:12px}
+.cartbtn{position:relative;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:var(--tam-2);cursor:pointer;display:grid;place-items:center;transition:border-color .3s}
+.cartbtn:hover{border-color:var(--turmeric)}
+.cartbtn svg{width:22px;height:22px}
+.cartbtn .n{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 5px;border-radius:11px;background:var(--chilli);color:#fff;font-size:12px;font-weight:600;display:grid;place-items:center;transform:scale(0);transition:transform .35s var(--ease)}
+.cartbtn .n.on{transform:scale(1)}
+.bump{animation:bump .5s var(--ease)}
+@keyframes bump{40%{transform:scale(1.25)}}
+.navr .btn{padding:10px 22px}
+
+/* hero */
+.hero{position:relative;padding-block:56px 96px;overflow:hidden}
+.hero::before{content:"";position:absolute;width:760px;height:760px;right:-260px;top:-180px;background:radial-gradient(circle,rgba(233,168,36,.22),transparent 65%);pointer-events:none}
+.herogrid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;position:relative}
+.status{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border:1px solid var(--line);border-radius:999px;font-size:14px;background:var(--tam-2)}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 0 transparent}
+.status.open i{background:var(--leaf);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(90,164,105,.7)}100%{box-shadow:0 0 0 12px rgba(90,164,105,0)}}
+.hero h1{font-size:clamp(46px,7.4vw,100px);margin:22px 0 22px;letter-spacing:-.01em}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}
+.hero h1 .w>span{display:inline-block;transform:translateY(110%);animation:up 1s var(--ease) forwards;animation-delay:calc(var(--i)*.09s + .5s)}
+.hero h1 em{font-style:normal;color:var(--turmeric)}
+@keyframes up{to{transform:none}}
+.hero .hi{font-size:22px;color:var(--turmeric);font-weight:500;margin-bottom:4px}
+.hero p.lead{max-width:46ch;font-size:19px;color:var(--muted)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.facts{display:flex;gap:36px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:1px solid var(--line)}
+.facts b{display:block;font-family:var(--display);font-weight:400;font-size:32px;color:var(--turmeric);font-variant-numeric:tabular-nums}
+.facts span{font-size:14px;color:var(--muted)}
+.plate{position:relative;justify-self:center;width:min(100%,500px)}
+.plate .disc{aspect-ratio:1;border-radius:50%;overflow:hidden;border:10px solid var(--tam-3);box-shadow:0 50px 90px -30px rgba(0,0,0,.7),0 0 0 1px var(--line);background:var(--tam-3);animation:reveal 1.5s var(--ease) both .2s}
+@keyframes reveal{from{clip-path:circle(0%);transform:scale(.9) rotate(-12deg)}to{clip-path:circle(75%);transform:none}}
+.plate .disc img{width:112%;height:112%;margin:-6%;object-fit:cover;will-change:transform}
+.plate .ring{position:absolute;inset:-26px;border:1px dashed rgba(233,168,36,.5);border-radius:50%;animation:turn 40s linear infinite}
+@keyframes turn{to{transform:rotate(360deg)}}
+.chip{position:absolute;background:var(--cream);color:var(--tam);border-radius:16px;padding:10px 16px;font-size:14px;line-height:1.3;font-weight:500;box-shadow:0 20px 40px -18px rgba(0,0,0,.6);animation:float 6s ease-in-out infinite}
+.chip b{display:block;font-family:var(--display);font-weight:400;font-size:20px}
+.chip.c1{left:-6%;top:12%}
+.chip.c2{right:-4%;bottom:10%;animation-delay:1.6s;background:var(--turmeric)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.steam{position:absolute;left:50%;top:-6%;width:120px;height:90px;transform:translateX(-50%);pointer-events:none}
+.steam path{fill:none;stroke:rgba(248,238,219,.55);stroke-width:3;stroke-linecap:round;stroke-dasharray:40 80;animation:steam 3.4s ease-in-out infinite}
+.steam path:nth-child(2){animation-delay:.9s}.steam path:nth-child(3){animation-delay:1.8s}
+@keyframes steam{0%{stroke-dashoffset:120;opacity:0}30%{opacity:.9}100%{stroke-dashoffset:0;opacity:0}}
+.hero .eyebrow,.hero .hi,.hero p.lead,.hero .cta,.facts,.status{animation:rise 1s var(--ease) both}
+.hero .hi{animation-delay:.2s}.hero p.lead{animation-delay:1s}.hero .cta{animation-delay:1.15s}.facts{animation-delay:1.3s}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* marquee */
+.marquee{background:var(--turmeric);color:var(--tam);overflow:hidden;white-space:nowrap;padding:14px 0;transform:rotate(-1.2deg);margin-block:-8px;position:relative;z-index:2}
+.track{display:inline-flex;gap:36px;animation:slide 36s linear infinite;font-family:var(--display);font-size:26px;padding-left:36px}
+.track i{font-style:normal;font-size:16px;align-self:center}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+section{padding-block:104px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:28px;flex-wrap:wrap;margin-bottom:44px}
+.head h2{font-size:clamp(36px,5vw,64px);margin-top:12px;max-width:15ch}
+.head p{max-width:40ch;color:var(--muted)}
+
+/* menu */
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:34px}
+.fchip{padding:9px 20px;border:1.5px solid var(--line);border-radius:999px;background:transparent;cursor:pointer;font-weight:500;font-size:15px;color:var(--muted);transition:all .3s var(--ease)}
+.fchip:hover{border-color:var(--turmeric);color:var(--cream)}
+.fchip[aria-pressed="true"]{background:var(--turmeric);border-color:var(--turmeric);color:var(--tam)}
+.veg{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);cursor:pointer;user-select:none}
+.veg input{position:absolute;opacity:0;pointer-events:none}
+.sw{width:46px;height:26px;border-radius:13px;background:var(--tam-3);position:relative;transition:background .3s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--cream);transition:transform .35s var(--ease)}
+.veg input:checked+.sw{background:var(--leaf)}
+.veg input:checked+.sw::after{transform:translateX(20px)}
+.veg input:focus-visible+.sw{outline:2px solid var(--turmeric);outline-offset:3px}
+.menu{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.dish{background:var(--tam-2);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line);opacity:0;animation:rise .7s var(--ease) forwards;animation-delay:calc(var(--k)*.07s);transform-style:preserve-3d;transition:transform .25s ease-out,border-color .4s,box-shadow .4s}
+.dish:hover{border-color:rgba(233,168,36,.5);box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.dish .ph{aspect-ratio:4/3;overflow:hidden;position:relative;background:var(--tam-3)}
+.dish .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.dish:hover .ph img{transform:scale(1.08)}
+.mark{position:absolute;top:14px;left:14px;width:22px;height:22px;border:2px solid var(--leaf);background:var(--cream);border-radius:4px;display:grid;place-items:center}
+.mark::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--leaf)}
+.mark.nv{border-color:var(--chilli)}.mark.nv::after{background:var(--chilli)}
+.dish .bd{padding:20px 22px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.dish h3{font-size:24px}
+.dish p{font-size:15px;color:var(--muted);flex:1}
+.heat{display:flex;gap:5px;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.heat i{width:9px;height:9px;border-radius:50%;background:var(--tam-3)}
+.heat i.on{background:var(--chilli)}
+.buy{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:14px;border-top:1px solid var(--line)}
+.price{font-family:var(--display);font-size:24px;color:var(--turmeric);font-variant-numeric:tabular-nums}
+.add{padding:9px 20px;border-radius:999px;border:1.5px solid var(--turmeric);color:var(--turmeric);background:transparent;font-weight:600;font-size:14px;cursor:pointer;transition:all .3s}
+.add:hover{background:var(--turmeric);color:var(--tam)}
+.qty{display:inline-flex;align-items:center;gap:2px;border:1.5px solid var(--turmeric);border-radius:999px;overflow:hidden}
+.qty button{width:34px;height:34px;border:0;background:transparent;font-size:20px;line-height:1;cursor:pointer;color:var(--turmeric)}
+.qty button:hover{background:var(--turmeric);color:var(--tam)}
+.qty span{min-width:26px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.empty{grid-column:1/-1;padding:48px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:22px}
+
+/* story */
+.story{background:var(--tam-2);border-block:1px solid var(--line)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.collage{position:relative;aspect-ratio:1/1.05}
+.collage .a,.collage .b{position:absolute;overflow:hidden;border-radius:22px;background:var(--tam-3);box-shadow:0 40px 70px -35px #000}
+.collage .a{inset:0 22% 18% 0}
+.collage .b{inset:42% 0 0 38%;border:8px solid var(--tam-2)}
+.collage img{width:100%;height:100%;object-fit:cover}
+.story h2{font-size:clamp(34px,4.6vw,58px);margin:12px 0 22px}
+.story p{color:var(--muted);max-width:50ch;margin-bottom:14px}
+.sign{font-family:var(--display);font-size:28px;color:var(--turmeric);margin-top:20px}
+.sign small{display:block;font-family:var(--body);font-size:14px;color:var(--muted);letter-spacing:.1em}
+.vals{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px}
+.vals div{padding-top:16px;border-top:2px solid var(--turmeric)}
+.vals b{display:block;font-family:var(--display);font-weight:400;font-size:20px}
+.vals span{font-size:14px;color:var(--muted)}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:230px;gap:16px}
+.gal figure{position:relative;overflow:hidden;border-radius:20px;background:var(--tam-3)}
+.gal figure:nth-child(1){grid-column:span 2;grid-row:span 2}
+.gal figure:nth-child(4){grid-column:span 2}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.gal figure:hover img{transform:scale(1.08)}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 14px;background:linear-gradient(transparent,rgba(0,0,0,.75));font-size:14px;opacity:0;transform:translateY(10px);transition:all .5s var(--ease)}
+.gal figure:hover figcaption{opacity:1;transform:none}
+
+/* reviews */
+.rev{position:relative;max-width:820px;margin-inline:auto;text-align:center;min-height:240px}
+.rev blockquote{position:absolute;inset:0;opacity:0;transform:translateY(16px);transition:all .8s var(--ease);pointer-events:none}
+.rev blockquote.on{opacity:1;transform:none;position:relative;pointer-events:auto}
+.rev p{font-family:var(--display);font-size:clamp(24px,3.2vw,38px);line-height:1.25}
+.rev cite{display:block;margin-top:22px;font-style:normal;color:var(--muted);font-size:15px}
+.rev cite b{color:var(--turmeric);font-weight:600}
+.dots{display:flex;gap:10px;justify-content:center;margin-top:32px}
+.dots button{width:10px;height:10px;border-radius:50%;border:0;background:var(--tam-3);cursor:pointer;transition:all .3s;padding:0}
+.dots button.on{background:var(--turmeric);width:30px;border-radius:5px}
+
+/* reserve + visit */
+.reserve{background:var(--tam-2);border-top:1px solid var(--line)}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.form{background:var(--tam);border:1px solid var(--line);border-radius:26px;padding:34px;display:grid;gap:20px}
+.form h3{font-size:30px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label,.lbl{display:grid;gap:6px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+input,select{font:inherit;font-size:16px;letter-spacing:0;text-transform:none;font-weight:400;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--tam-2);color:var(--cream);width:100%;color-scheme:dark}
+input:focus,select:focus{outline:0;border-color:var(--turmeric)}
+.step{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:12px;background:var(--tam-2);padding:4px;width:max-content}
+.step button{width:38px;height:38px;border-radius:9px;border:0;background:var(--tam-3);font-size:20px;cursor:pointer}
+.step button:hover{background:var(--turmeric);color:var(--tam)}
+.step output{min-width:64px;text-align:center;font-size:16px;letter-spacing:0;text-transform:none;color:var(--cream);font-weight:500}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.slot{padding:10px 4px;border-radius:10px;border:1.5px solid var(--line);background:transparent;font-size:14px;cursor:pointer;transition:all .25s;text-transform:none;letter-spacing:0}
+.slot:hover:not(:disabled){border-color:var(--turmeric)}
+.slot[aria-pressed="true"]{background:var(--turmeric);border-color:var(--turmeric);color:var(--tam);font-weight:600}
+.slot:disabled{opacity:.3;text-decoration:line-through;cursor:not-allowed}
+.sub{font-size:13px;color:var(--muted);letter-spacing:.02em;text-transform:none;font-weight:400}
+.err{color:#ff9d8a;font-size:14px;min-height:20px}
+.ticket{display:none;border:2px dashed var(--turmeric);border-radius:22px;padding:30px;text-align:center;background:var(--tam);animation:rise .8s var(--ease)}
+.ticket.show{display:block}
+.ticket h3{font-size:34px;color:var(--turmeric);margin-bottom:6px}
+.ticket .id{font-family:var(--display);font-size:26px;letter-spacing:.14em;margin:12px 0}
+.ticket p{color:var(--muted)}
+.ticket .btn{margin-top:20px}
+.info{display:grid;gap:0}
+.info>div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.info dt{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--turmeric);font-weight:600;padding-top:3px}
+.info dd{font-size:17px}
+.hours{display:grid;grid-template-columns:auto auto;gap:2px 22px;justify-content:start;font-variant-numeric:tabular-nums}
+.hours .today{color:var(--turmeric);font-weight:600}
+.map{margin-top:34px;border-radius:24px;overflow:hidden;border:1px solid var(--line);position:relative;background:var(--tam-3);aspect-ratio:16/10}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:invert(.92) hue-rotate(180deg) saturate(.7) brightness(.95)}
+.mapbtns{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.copy{background:none;border:0;color:var(--turmeric);cursor:pointer;font-size:14px;text-decoration:underline;margin-left:8px}
+
+footer.site{padding-block:44px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* cart drawer */
+#shade{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:all .4s;z-index:70}
+#shade.on{opacity:1;visibility:visible}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--tam-2);z-index:80;transform:translateX(105%);transition:transform .5s var(--ease);display:flex;flex-direction:column;border-left:1px solid var(--line);padding-right:env(safe-area-inset-right,0px)}
+#drawer.on{transform:none}
+#drawer header{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+#drawer h3{font-size:26px}
+#close{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:transparent;font-size:20px;cursor:pointer}
+#lines{flex:1;overflow:auto;padding:8px 24px}
+.line{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.line img{width:64px;height:64px;object-fit:cover;border-radius:12px}
+.line b{display:block;font-weight:500;line-height:1.25}
+.line small{color:var(--muted)}
+.line .qty{transform:scale(.88);transform-origin:right}
+#sum{padding:20px 24px 24px;border-top:1px solid var(--line);display:grid;gap:8px}
+#sum div{display:flex;justify-content:space-between;color:var(--muted);font-variant-numeric:tabular-nums}
+#sum .tot{color:var(--cream);font-family:var(--display);font-size:26px;margin-top:6px}
+#sum .btn{margin-top:12px;width:100%}
+#sum small{color:var(--muted);text-align:center}
+.mt{padding:40px 0;text-align:center;color:var(--muted)}
+
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+
+@media (max-width:980px){
+  .links{display:none}
+  .herogrid,.split,.rgrid{grid-template-columns:1fr;gap:56px}
+  .hero{padding-block:36px 72px}
+  .menu{grid-template-columns:repeat(2,1fr)}
+  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}
+  .gal figure:nth-child(1){grid-column:span 2}
+  .gal figure:nth-child(4){grid-column:span 2}
+  section{padding-block:72px}
+  .veg{margin-left:0}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  .menu{grid-template-columns:1fr}
+  .row2{grid-template-columns:1fr}
+  .slots{grid-template-columns:repeat(3,1fr)}
+  .chip.c1{left:0}.chip.c2{right:0}
+  .navr .btn{display:none}
+  .vals{grid-template-columns:1fr}
+  .info>div{grid-template-columns:1fr;gap:2px}
+  .form{padding:24px 20px}
+  .facts{gap:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .hero h1 .w>span{transform:none}
+  .dish{opacity:1}
+  .js .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<div id="pre" aria-hidden="true">
+  <div class="pmark">
+    <svg class="flame" viewBox="0 0 46 60"><path d="M23 2c3 12 17 18 17 36a17 17 0 0 1-34 0c0-9 5-14 9-19 1 6 4 8 6 9-1-9 0-19 2-26z" fill="#e9a824"/><path d="M23 30c2 7 8 9 8 17a8 8 0 0 1-16 0c0-6 5-8 8-17z" fill="#d2442a"/></svg>
+    Tandoor &amp; Tamarind
+    <small>स्वागत है</small>
+  </div>
+</div>
+<div id="bar"></div>
+
+<header class="nav">
+  <div class="wrap navin">
+    <a class="logo" href="#top">Tandoor <b>&amp;</b> Tamarind</a>
+    <nav class="links" aria-label="Main">
+      <a href="#menu">Menu</a><a href="#story">Our story</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#visit">Visit</a>
+    </nav>
+    <div class="navr">
+      <a class="btn solid" href="#visit">Book a table</a>
+      <button class="cartbtn" id="openCart" aria-label="Open your order">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 12H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="n" id="count" aria-live="polite">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding-top:56px">
+    <div class="wrap herogrid">
+      <div>
+        <span class="status" id="status"><i></i><span id="statusTxt">Checking hours</span></span>
+        <h1 aria-label="Smoke, spice and slow cooked stories">
+          <span class="w" style="--i:0"><span>Smoke,</span></span>
+          <span class="w" style="--i:1"><span><em>spice</em></span></span>
+          <span class="w" style="--i:2"><span>&amp;</span></span>
+          <span class="w" style="--i:3"><span>slow-</span></span><span class="w" style="--i:4"><span>cooked</span></span>
+          <span class="w" style="--i:5"><span>stories.</span></span>
+        </h1>
+        <p class="lead">A charcoal tandoor, a wall of spices and recipes that came down three kitchens. Come hungry to Koregaon Park, or have it brought to you.</p>
+        <div class="cta">
+          <a class="btn solid" href="#menu">Order from the menu</a>
+          <a class="btn" href="#visit">Reserve a table</a>
+        </div>
+        <div class="facts">
+          <div><b data-count="14">0</b><span>years on the tandoor</span></div>
+          <div><b data-count="62">0</b><span>dishes cooked daily</span></div>
+          <div><b data-count="4.8" data-dec="1">0</b><span>average guest rating</span></div>
+        </div>
+      </div>
+      <div class="plate">
+        <svg class="steam" viewBox="0 0 120 90" aria-hidden="true"><path d="M30 85c-14-18 14-24 0-42S44 12 40 4"/><path d="M60 88c-14-18 14-24 0-42S74 15 70 6"/><path d="M90 85c-14-18 14-24 0-42S104 12 100 4"/></svg>
+        <div class="ring" aria-hidden="true"></div>
+        <div class="disc" id="parallax"><img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=75" alt="Grilled meat and vegetables served on a table" width="1000" height="1000" fetchpriority="high"></div>
+        <div class="chip c1">Live from the grill<b>Charcoal Platter</b></div>
+        <div class="chip c2">Chef's pick<b>Tikka Masala</b></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>समोसा</span><i>&#10022;</i><span>तंदूरी</span><i>&#10022;</i><span>डोसा</span><i>&#10022;</i><span>टिक्का मसाला</span><i>&#10022;</i><span>केरल थाली</span><i>&#10022;</i><span>कबाब</span><i>&#10022;</i>
+      <span>समोसा</span><i>&#10022;</i><span>तंदूरी</span><i>&#10022;</i><span>डोसा</span><i>&#10022;</i><span>टिक्का मसाला</span><i>&#10022;</i><span>केरल थाली</span><i>&#10022;</i><span>कबाब</span><i>&#10022;</i>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="wrap">
+      <div class="head rv">
+        <div><p class="eyebrow">The menu</p><h2>Pick it, add it, we fire it up</h2></div>
+        <p>Filter by course or go vegetarian only. Build your order, then send it to us on WhatsApp for pickup or delivery.</p>
+      </div>
+      <div class="filters rv" id="filters" role="group" aria-label="Menu filters"></div>
+      <div class="menu" id="menu-grid"></div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story" id="story">
+    <div class="wrap split">
+      <div class="collage rv">
+        <div class="a"><img src="https://images.unsplash.com/photo-1767785990437-dfe1fe516fe8?auto=format&fit=crop&w=900&q=75" alt="Chefs working in a busy restaurant kitchen" loading="lazy"></div>
+        <div class="b"><img src="https://images.unsplash.com/photo-1784501025488-001592b6ee31?auto=format&fit=crop&w=700&q=75" alt="Colourful spices piled high in a market" loading="lazy"></div>
+      </div>
+      <div class="rv" style="--d:.15s">
+        <p class="eyebrow">Our story</p>
+        <h2>We grind the masala every morning at six</h2>
+        <p>Chef Arjun Mehta opened Tandoor &amp; Tamarind in 2012 with one clay oven and his grandmother's spice box. The oven is still lit before sunrise, and every masala is ground in house, never bought in a packet.</p>
+        <p>The menu moves between the north's smoky tandoor and the south's banana leaf meals, because that is how the family eats at home.</p>
+        <div class="vals">
+          <div><b>Ground daily</b><span>Whole spices, roasted and pounded each morning</span></div>
+          <div><b>Charcoal only</b><span>No gas in the tandoor, ever</span></div>
+          <div><b>Local farms</b><span>Vegetables from Mulshi and Junnar</span></div>
+        </div>
+        <div class="sign">Arjun Mehta<small>FOUNDER &amp; HEAD CHEF</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="head rv"><div><p class="eyebrow">The room</p><h2>Warm light, long tables, loud laughter</h2></div><p>Seats 64 inside and 24 on the garden terrace. Private dining for up to 20.</p></div>
+      <div class="gal">
+        <figure class="rv"><img src="https://images.unsplash.com/photo-1636405189493-181ecf851006?auto=format&fit=crop&w=1100&q=75" alt="A restaurant with a tree in the middle of the room" loading="lazy"><figcaption>The main dining hall</figcaption></figure>
+        <figure class="rv" style="--d:.1s"><img src="https://images.unsplash.com/photo-1570560258879-af7f8e1447ac?auto=format&fit=crop&w=700&q=75" alt="People dining inside the restaurant" loading="lazy"><figcaption>Friday evenings</figcaption></figure>
+        <figure class="rv" style="--d:.2s"><img src="https://images.unsplash.com/photo-1552960226-639240203497?auto=format&fit=crop&w=700&q=75" alt="Lit lamps in the dining room" loading="lazy"><figcaption>Brass lamps over the bar</figcaption></figure>
+        <figure class="rv"><img src="https://images.unsplash.com/photo-1636405188904-bc706f07aa37?auto=format&fit=crop&w=1100&q=75" alt="Wooden tables and chairs in the restaurant" loading="lazy"><figcaption>Teak tables, built to be shared</figcaption></figure>
+        <figure class="rv" style="--d:.1s"><img src="https://images.unsplash.com/photo-1503453776591-b4548af666a2?auto=format&fit=crop&w=700&q=75" alt="Chef garnishing a dish" loading="lazy"><figcaption>Finishing at the pass</figcaption></figure>
+        <figure class="rv" style="--d:.2s"><img src="https://images.unsplash.com/photo-1603088549155-6ae9395b928f?auto=format&fit=crop&w=700&q=75" alt="Meat grilling on charcoal" loading="lazy"><figcaption>The charcoal grill</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head rv" style="justify-content:center;text-align:center"><div><p class="eyebrow">Guests say</p><h2 style="margin-inline:auto">Come for dinner, stay for the second helping</h2></div></div>
+      <div class="rev rv" id="rev" aria-live="polite">
+        <blockquote class="on"><p>The tikka masala tastes like it has been cooking since yesterday, in the best way. We booked again before leaving.</p><cite><b>Neha Patwardhan</b> &middot; Viman Nagar</cite></blockquote>
+        <blockquote><p>The dosa comes out so crisp you hear it. Staff never rushed us, even on a packed Saturday night.</p><cite><b>Siddharth Rao</b> &middot; Kalyani Nagar</cite></blockquote>
+        <blockquote><p>We held my parents' anniversary in the private room. The banana leaf meal had the whole family quiet for ten minutes.</p><cite><b>Pooja Gokhale</b> &middot; Aundh</cite></blockquote>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </section>
+
+  <!-- RESERVE + VISIT -->
+  <section class="reserve" id="visit">
+    <div class="wrap rgrid">
+      <div class="rv">
+        <p class="eyebrow">Reserve a table</p>
+        <h2 style="font-size:clamp(34px,4.6vw,58px);margin:12px 0 20px">Tell us when, we'll keep the table warm</h2>
+        <form class="form" id="resForm" novalidate>
+          <h3>Your booking</h3>
+          <div class="row2">
+            <label for="rn">Name<input id="rn" autocomplete="name" required></label>
+            <label for="rp">Phone<input id="rp" type="tel" inputmode="tel" autocomplete="tel" required></label>
+          </div>
+          <div class="row2">
+            <label for="rd">Date<input id="rd" type="date" required></label>
+            <div class="lbl">Guests
+              <div class="step"><button type="button" id="gm" aria-label="Fewer guests">&minus;</button><output id="gv">2 people</output><button type="button" id="gp" aria-label="More guests">+</button></div>
+            </div>
+          </div>
+          <div class="lbl" id="slotLbl">Time <span class="sub" id="slotHint">Pick a date to see open times</span>
+            <div class="slots" id="slots"></div>
+          </div>
+          <label for="ro">Occasion
+            <select id="ro"><option>Just dinner</option><option>Birthday</option><option>Anniversary</option><option>Business lunch</option><option>Family get-together</option></select>
+          </label>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn solid" type="submit">Confirm reservation</button>
+        </form>
+        <div class="ticket" id="ticket" role="status">
+          <h3>Table reserved</h3>
+          <p id="tmsg"></p>
+          <div class="id" id="tid"></div>
+          <p>Show this code at the host stand. Tables are held for 15 minutes.</p>
+          <button class="btn" id="ics" type="button">Add to calendar</button>
+          <button class="btn" id="again" type="button">Make another booking</button>
+        </div>
+      </div>
+
+      <div class="rv" style="--d:.15s">
+        <p class="eyebrow">Find us</p>
+        <h2 style="font-size:clamp(34px,4.6vw,58px);margin:12px 0 18px">Lane 6, Koregaon Park</h2>
+        <dl class="info">
+          <div><dt>Address</dt><dd>Shop 4, Lane 6, Koregaon Park,<br>Pune, Maharashtra 411001 <button class="copy" id="copyAddr" type="button">Copy</button></dd></div>
+          <div><dt>Hours</dt><dd><div class="hours" id="hours"></div></dd></div>
+          <div><dt>Phone</dt><dd>+91 98765 43210</dd></div>
+          <div><dt>Email</dt><dd>hello@tandoortamarind.in</dd></div>
+          <div><dt>Parking</dt><dd>Valet from 6 pm. Free lane parking before.</dd></div>
+        </dl>
+        <div class="map">
+          <iframe title="Map showing Tandoor &amp; Tamarind in Koregaon Park, Pune" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=73.8890%2C18.5310%2C73.8990%2C18.5415&amp;layer=mapnik&amp;marker=18.5362%2C73.8940"></iframe>
+        </div>
+        <div class="mapbtns">
+          <a class="btn solid" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=18.5362,73.8940">Get directions</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=18.5362&mlon=73.8940#map=17/18.5362/73.8940">Open full map</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap"><span class="logo">Tandoor <b>&amp;</b> Tamarind</span><span>&copy; 2026 Tandoor &amp; Tamarind, Koregaon Park, Pune &middot; Sample details for demo use</span></div>
+</footer>
+
+<div id="shade"></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-label="Your order" aria-hidden="true">
+  <header><h3>Your order</h3><button id="close" aria-label="Close order">&times;</button></header>
+  <div id="lines"></div>
+  <div id="sum"></div>
+</aside>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var U='https://images.unsplash.com/photo-';
+var PHONE='919876543210';
+var ADDRESS='Shop 4, Lane 6, Koregaon Park, Pune, Maharashtra 411001';
+
+/* menu data */
+var MENU=[
+ {id:1,n:'Crispy Samosa Chaat',d:'Three golden samosas with green chilli, pomegranate and tamarind chutney.',p:180,c:'Starters',v:1,h:1,i:'1601050690597-df0568f70950'},
+ {id:2,n:'Charcoal Platter',d:'Tandoor grilled meats and vegetables with mint chutney and burnt onion.',p:620,c:'Tandoor',v:0,h:2,i:'1555939594-58d7cb561ad1'},
+ {id:3,n:'Smoked Grill Skewers',d:'Meat cooked over live charcoal, brushed with ghee and chaat masala.',p:540,c:'Tandoor',v:0,h:3,i:'1603088549155-6ae9395b928f'},
+ {id:4,n:'Chicken Tikka Masala',d:'Tandoori chicken in a slow tomato and cashew gravy, finished with mint.',p:420,c:'Mains',v:0,h:2,i:'1772730064951-89b427965dbc'},
+ {id:5,n:'Chef’s Curry Trio',d:'Three house gravies with jeera rice. Ask for the seasonal vegetable.',p:380,c:'Mains',v:1,h:2,i:'1767114915989-c6ab3c8fc42e'},
+ {id:6,n:'Salmon Makhani',d:'Pan seared salmon in a buttery makhani sauce with lemon and herbs.',p:690,c:'Mains',v:0,h:1,i:'1574484284002-952d92456975'},
+ {id:7,n:'Masala Dosa Tasting',d:'Crisp dosa with potato masala, sambar and three chutneys.',p:240,c:'South Indian',v:1,h:1,i:'1668236543090-82eba5ee5976'},
+ {id:8,n:'Banana Leaf Meal',d:'The full South Indian spread served on a banana leaf, with unlimited rice.',p:360,c:'South Indian',v:1,h:2,i:'1625398407796-82650a8c135f'},
+ {id:9,n:'Kerala Fish Meal',d:'Fried fish, papadum, thoran and curries in small bowls, Kerala style.',p:480,c:'South Indian',v:0,h:3,i:'1786227905994-235e1799292e'}
+];
+var CATS=['All','Starters','Tandoor','Mains','South Indian'];
+var imgUrl=function(m,w){return U+m.i+'?auto=format&fit=crop&w='+w+'&q=75'};
+var money=function(n){return '₹'+n.toLocaleString('en-IN')};
+
+/* cart state */
+var cart={};
+try{cart=JSON.parse(localStorage.getItem('tt_cart')||'{}')||{}}catch(e){cart={}}
+function save(){try{localStorage.setItem('tt_cart',JSON.stringify(cart))}catch(e){}}
+function totalQty(){return Object.keys(cart).reduce(function(a,k){return a+cart[k]},0)}
+function byId(id){return MENU.filter(function(m){return m.id==id})[0]}
+function setQty(id,q){if(q<=0)delete cart[id];else cart[id]=Math.min(q,20);save();renderAll(true)}
+
+/* filters */
+var cat='All',vegOnly=false;
+function renderFilters(){
+  var f=$('#filters');
+  f.innerHTML=CATS.map(function(c){return '<button class="fchip" type="button" data-c="'+c+'" aria-pressed="'+(c===cat)+'">'+c+'</button>'}).join('')+
+   '<label class="veg"><input type="checkbox" id="vegT"'+(vegOnly?' checked':'')+'><span class="sw"></span>Vegetarian only</label>';
+}
+$('#filters').addEventListener('click',function(e){
+  var b=e.target.closest('.fchip');if(!b)return;
+  cat=b.dataset.c;renderFilters();renderMenu();
+});
+$('#filters').addEventListener('change',function(e){
+  if(e.target.id==='vegT'){vegOnly=e.target.checked;renderMenu()}
+});
+
+function buyHtml(m){
+  var q=cart[m.id]||0;
+  return q?'<div class="qty"><button type="button" data-a="dec" data-id="'+m.id+'" aria-label="Remove one">&minus;</button><span>'+q+'</span><button type="button" data-a="inc" data-id="'+m.id+'" aria-label="Add one">+</button></div>'
+          :'<button class="add" type="button" data-a="inc" data-id="'+m.id+'">Add</button>';
+}
+function renderMenu(){
+  var list=MENU.filter(function(m){return (cat==='All'||m.c===cat)&&(!vegOnly||m.v)});
+  $('#menu-grid').innerHTML=list.length?list.map(function(m,k){
+    var heat='';for(var j=1;j<=3;j++)heat+='<i class="'+(j<=m.h?'on':'')+'"></i>';
+    return '<article class="dish" style="--k:'+k+'" data-id="'+m.id+'">'+
+      '<div class="ph"><img src="'+imgUrl(m,800)+'" alt="'+m.n+'" loading="lazy"><span class="mark'+(m.v?'':' nv')+'" title="'+(m.v?'Vegetarian':'Non-vegetarian')+'"></span></div>'+
+      '<div class="bd"><div class="heat">'+heat+'<span style="margin-left:6px">'+['','Mild','Medium','Hot'][m.h]+'</span></div>'+
+      '<h3>'+m.n+'</h3><p>'+m.d+'</p>'+
+      '<div class="buy"><span class="price">'+money(m.p)+'</span><span class="act">'+buyHtml(m)+'</span></div></div></article>';
+  }).join(''):'<div class="empty">Nothing matches that filter. Try another course.</div>';
+  tiltInit();
+}
+$('#menu-grid').addEventListener('click',function(e){
+  var b=e.target.closest('[data-a]');if(!b)return;
+  var id=+b.dataset.id,q=cart[id]||0;
+  setQty(id,b.dataset.a==='inc'?q+1:q-1);
+});
+
+/* cart drawer */
+function renderCart(){
+  var ids=Object.keys(cart),n=totalQty(),c=$('#count');
+  c.textContent=n;c.classList.toggle('on',n>0);
+  if(!ids.length){
+    $('#lines').innerHTML='<p class="mt">Your order is empty.<br>Add a dish from the menu.</p>';
+    $('#sum').innerHTML='';return;
+  }
+  var sub=0;
+  $('#lines').innerHTML=ids.map(function(id){
+    var m=byId(id),q=cart[id];sub+=m.p*q;
+    return '<div class="line"><img src="'+imgUrl(m,160)+'" alt=""><div><b>'+m.n+'</b><small>'+money(m.p)+' each</small></div>'+
+      '<div class="qty"><button type="button" data-a="dec" data-id="'+id+'" aria-label="Remove one">&minus;</button><span>'+q+'</span><button type="button" data-a="inc" data-id="'+id+'" aria-label="Add one">+</button></div></div>';
+  }).join('');
+  var gst=Math.round(sub*0.05);
+  $('#sum').innerHTML='<div><span>Subtotal</span><span>'+money(sub)+'</span></div><div><span>GST 5%</span><span>'+money(gst)+'</span></div>'+
+    '<div class="tot"><span>Total</span><span>'+money(sub+gst)+'</span></div>'+
+    '<a class="btn solid" id="wa" target="_blank" rel="noopener" href="'+waLink(sub,gst)+'">Send order on WhatsApp</a><small>We confirm the time and payment on WhatsApp.</small>';
+}
+function waLink(sub,gst){
+  var t='Hi Tandoor & Tamarind, I would like to order:\n'+Object.keys(cart).map(function(id){var m=byId(id);return '• '+cart[id]+' x '+m.n+' ('+money(m.p*cart[id])+')'}).join('\n')+
+   '\nTotal incl. GST: '+money(sub+gst)+'\nPickup or delivery?';
+  return 'https://wa.me/'+PHONE+'?text='+encodeURIComponent(t);
+}
+$('#lines').addEventListener('click',function(e){
+  var b=e.target.closest('[data-a]');if(!b)return;
+  var id=+b.dataset.id,q=cart[id]||0;setQty(id,b.dataset.a==='inc'?q+1:q-1);
+});
+function renderAll(bump){
+  renderCart();
+  if(bump){
+    $$('.dish').forEach(function(el){var m=byId(el.dataset.id);$('.act',el).innerHTML=buyHtml(m)});
+    var c=$('#openCart');c.classList.remove('bump');void c.offsetWidth;c.classList.add('bump');
+  }
+}
+var drawer=$('#drawer'),shade=$('#shade');
+function openCart(o){
+  drawer.classList.toggle('on',o);shade.classList.toggle('on',o);
+  drawer.setAttribute('aria-hidden',!o);document.body.style.overflow=o?'hidden':'';
+  if(o)$('#close').focus();else $('#openCart').focus();
+}
+$('#openCart').addEventListener('click',function(){openCart(true)});
+$('#close').addEventListener('click',function(){openCart(false)});
+shade.addEventListener('click',function(){openCart(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&drawer.classList.contains('on'))openCart(false)});
+
+/* tilt on dish cards */
+function tiltInit(){
+  if(rm||!window.matchMedia('(pointer:fine)').matches)return;
+  $$('.dish').forEach(function(el){
+    el.addEventListener('pointermove',function(e){
+      var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      el.style.transform='perspective(900px) rotateY('+(x*6)+'deg) rotateX('+(-y*6)+'deg) translateY(-4px)';
+    });
+    el.addEventListener('pointerleave',function(){el.style.transform=''});
+  });
+}
+
+/* open / closed (India time) */
+var HOURS=[['Sunday',12,23],['Monday',12,23],['Tuesday',12,23],['Wednesday',12,23],['Thursday',12,23],['Friday',12,23.5],['Saturday',12,23.5]];
+function ist(){
+  var p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',weekday:'long',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date()),o={};
+  p.forEach(function(x){o[x.type]=x.value});
+  return {day:o.weekday,h:(+o.hour%24)+ (+o.minute)/60};
+}
+function fmt(h){var hh=Math.floor(h),mm=Math.round((h-hh)*60),ap=hh>=12?'pm':'am',h12=hh%12||12;return h12+(mm?':'+(mm<10?'0':'')+mm:'')+' '+ap}
+function status(){
+  var t=ist(),row=HOURS.filter(function(r){return r[0]===t.day})[0],open=row&&t.h>=row[1]&&t.h<row[2];
+  var s=$('#status');s.classList.toggle('open',!!open);
+  $('#statusTxt').textContent=open?'Open now · kitchen closes '+fmt(row[2]):'Closed now · opens '+(row&&t.h<row[1]?'today':'tomorrow')+' at 12 pm';
+  $('#hours').innerHTML=HOURS.slice(1).concat(HOURS.slice(0,1)).map(function(r){
+    return '<span class="'+(r[0]===t.day?'today':'')+'">'+r[0].slice(0,3)+'</span><span class="'+(r[0]===t.day?'today':'')+'">'+fmt(r[1])+' – '+fmt(r[2])+'</span>';
+  }).join('');
+}
+
+/* reservation */
+var SLOTS=[12.5,13,13.5,14,19,19.5,20,20.5,21,21.5],guests=2,picked=null,booking=null;
+var rd=$('#rd');
+function pad(n){return (n<10?'0':'')+n}
+function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+var today=new Date();rd.min=ymd(today);rd.value=ymd(today);
+var max=new Date();max.setDate(max.getDate()+60);rd.max=ymd(max);
+function full(date,h){var s=date+h,x=0;for(var i=0;i<s.length;i++)x=(x*31+s.charCodeAt(i))%97;return x%5===0}
+function renderSlots(){
+  var d=rd.value,now=new Date(),isToday=d===ymd(now),nh=now.getHours()+now.getMinutes()/60;
+  if(!d){$('#slots').innerHTML='';return}
+  picked=null;
+  $('#slots').innerHTML=SLOTS.map(function(h){
+    var dis=(isToday&&h<=nh+0.5)||full(d,h)||(guests>8&&h%1);
+    return '<button class="slot" type="button" data-h="'+h+'" aria-pressed="false"'+(dis?' disabled':'')+'>'+fmt(h).replace(' ',' ')+'</button>';
+  }).join('');
+  $('#slotHint').textContent='Greyed times are taken or have passed';
+}
+rd.addEventListener('change',renderSlots);
+$('#slots').addEventListener('click',function(e){
+  var b=e.target.closest('.slot');if(!b||b.disabled)return;
+  $$('.slot').forEach(function(s){s.setAttribute('aria-pressed','false')});
+  b.setAttribute('aria-pressed','true');picked=+b.dataset.h;$('#err').textContent='';
+});
+function setG(n){guests=Math.max(1,Math.min(20,n));$('#gv').textContent=guests+(guests===1?' person':' people');renderSlots()}
+$('#gm').addEventListener('click',function(){setG(guests-1)});
+$('#gp').addEventListener('click',function(){setG(guests+1)});
+$('#resForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=$('#rn').value.trim(),p=$('#rp').value.trim(),er=$('#err');
+  if(!n){er.textContent='Please enter your name.';$('#rn').focus();return}
+  if(p.replace(/\D/g,'').length<10){er.textContent='Enter a 10 digit phone number so we can confirm.';$('#rp').focus();return}
+  if(!rd.value){er.textContent='Choose a date.';rd.focus();return}
+  if(picked===null){er.textContent='Pick an available time.';return}
+  er.textContent='';
+  var id='TT-'+Math.random().toString(36).slice(2,7).toUpperCase();
+  booking={id:id,name:n,date:rd.value,h:picked,g:guests,occ:$('#ro').value};
+  try{localStorage.setItem('tt_booking',JSON.stringify(booking))}catch(x){}
+  var dt=new Date(rd.value+'T00:00:00');
+  $('#tmsg').textContent=n+', a table for '+guests+' on '+dt.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+' at '+fmt(picked)+'.';
+  $('#tid').textContent=id;
+  $('#resForm').style.display='none';$('#ticket').classList.add('show');
+  $('#ticket').scrollIntoView({behavior:rm?'auto':'smooth',block:'center'});
+});
+$('#again').addEventListener('click',function(){
+  $('#ticket').classList.remove('show');$('#resForm').style.display='';$('#resForm').reset();rd.value=ymd(new Date());setG(2);
+});
+$('#ics').addEventListener('click',function(){
+  if(!booking)return;
+  var d=booking.date.replace(/-/g,''),hh=Math.floor(booking.h),mm=Math.round((booking.h-hh)*60),eh=hh+2;
+  var s=d+'T'+pad(hh)+pad(mm)+'00',en=d+'T'+pad(eh)+pad(mm)+'00';
+  var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Tandoor and Tamarind//EN','BEGIN:VEVENT','UID:'+booking.id+'@tandoortamarind.in',
+   'DTSTAMP:'+new Date().toISOString().replace(/[-:]|\.\d+/g,''),'DTSTART:'+s,'DTEND:'+en,
+   'SUMMARY:Dinner at Tandoor & Tamarind ('+booking.g+' guests)','LOCATION:'+ADDRESS.replace(/,/g,'\\,'),
+   'DESCRIPTION:Booking '+booking.id+'. Table held for 15 minutes.','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='tandoor-tamarind-booking.ics';
+  document.body.appendChild(a);a.click();a.remove();
+});
+$('#copyAddr').addEventListener('click',function(){
+  var b=this;
+  function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ADDRESS).then(done,function(){})}
+});
+
+/* reviews carousel */
+(function(){
+  var qs=$$('#rev blockquote'),dots=$('#dots'),i=0,timer;
+  dots.innerHTML=qs.map(function(_,k){return '<button type="button" aria-label="Review '+(k+1)+'" class="'+(k?'':'on')+'"></button>'}).join('');
+  function go(n){
+    qs[i].classList.remove('on');dots.children[i].classList.remove('on');
+    i=(n+qs.length)%qs.length;
+    qs[i].classList.add('on');dots.children[i].classList.add('on');
+  }
+  function auto(){clearInterval(timer);if(!rm)timer=setInterval(function(){go(i+1)},6000)}
+  dots.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;go($$('button',dots).indexOf(b));auto()});
+  auto();
+})();
+
+/* reveal, counters, progress, parallax */
+(function(){
+  var els=$$('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')})}
+  else{
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -5% 0px'});
+    els.forEach(function(e){io.observe(e)});
+  }
+  function count(el){
+    var end=parseFloat(el.dataset.count),dec=+el.dataset.dec||0,t0=null;
+    if(rm){el.textContent=end.toFixed(dec)+(dec?'':'+');return}
+    function f(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1600,1),v=end*(1-Math.pow(1-p,3));
+      el.textContent=v.toFixed(dec)+(p===1&&!dec?'+':'');if(p<1)requestAnimationFrame(f)}
+    requestAnimationFrame(f);
+  }
+  var nums=$$('[data-count]');
+  setTimeout(function(){nums.forEach(count)},1500);
+  var bar=$('#bar'),disc=$('#parallax img'),tick=false;
+  window.addEventListener('scroll',function(){
+    if(tick)return;tick=true;
+    requestAnimationFrame(function(){
+      var h=document.documentElement,max=h.scrollHeight-h.clientHeight,y=window.scrollY;
+      bar.style.transform='scaleX('+(max>0?y/max:0)+')';
+      if(!rm&&y<900)disc.style.transform='translateY('+(y*.08)+'px) rotate('+(y*.02)+'deg)';
+      tick=false;
+    });
+  },{passive:true});
+})();
+
+/* preloader */
+function hidePre(){$('#pre').classList.add('done')}
+window.addEventListener('load',function(){setTimeout(hidePre,rm?0:900)});
+setTimeout(hidePre,3000);
+
+/* init */
+renderFilters();renderMenu();renderCart();status();setG(2);
+setInterval(status,60000);
+})();
+</script>
+</body>
+</html>
